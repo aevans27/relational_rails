@@ -41,4 +41,47 @@ RSpec.describe "Teams Index", type: :feature do
       end
     end
   end
+
+  describe "User Story 3, Player Index" do
+    describe "As a visitor" do
+      describe "When I visit '/player_table_name" do
+        it "Then I see each player in the system including the player's attributes" do
+          #arrange
+          team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+          team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+          team_1.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
+          #act
+          visit "/player_table_name"
+          #assert
+          expect(page).to have_content(team_1.players.first.name)
+          expect(page).to have_content(team_1.players.first.salary)
+          expect(page).to have_content(team_1.players.first.position)
+          expect(page).to have_content(team_1.players.first.injured)
+          expect(page).to have_content(team_1.players.last.name)
+          expect(page).to have_content(team_1.players.last.salary)
+          expect(page).to have_content(team_1.players.last.position)
+          expect(page).to have_content(team_1.players.last.injured)
+        end
+      end
+    end
+  end
+
+  describe "User Story 4, Player Show" do
+    describe "As a visitor" do
+      describe "When I visit '/player_table_name/:id'" do
+        it "Then I see the player with that id including the player's attributes" do
+          #arrange
+          team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+          team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+          #act
+          visit "/player_table_name/#{team_1.players.first.id}"
+          #assert
+          expect(page).to have_content(team_1.players.first.name)
+          expect(page).to have_content(team_1.players.first.salary)
+          expect(page).to have_content(team_1.players.first.position)
+          expect(page).to have_content(team_1.players.first.injured)
+        end
+      end
+    end
+  end
 end

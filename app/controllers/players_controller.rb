@@ -6,6 +6,11 @@ class PlayersController < ApplicationController
   def new
   end
 
+  def show
+    # require 'pry';binding.pry
+    @player = Player.find(params[:id])
+  end
+
   def create
     player = Player.new({
       id: params[:id],
