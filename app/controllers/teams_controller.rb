@@ -6,6 +6,11 @@ class TeamsController < ApplicationController
   def new
   end
 
+  def show
+    # require 'pry';binding.pry
+    @team = Team.find(params[:id])
+  end
+
   def create
     team = Team.new({
       id: params[:id],
