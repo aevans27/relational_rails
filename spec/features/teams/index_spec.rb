@@ -123,10 +123,10 @@ RSpec.describe "Teams Index", type: :feature do
           #act
             visit "/teams"
           #assert
-           puts team_1.created_at
-           puts team_2.created_at
-           puts team_3.created_at
-           puts team_0.created_at
+          #  puts team_1.created_at
+          #  puts team_2.created_at
+          #  puts team_3.created_at
+          #  puts team_0.created_at
             expect(page).to have_content(team_1.created_at)
             expect(page).to have_content(team_2.created_at)
             expect(page).to have_content(team_3.created_at)
@@ -207,6 +207,41 @@ RSpec.describe "Teams Index", type: :feature do
           #assert
           # puts team_1.player_count
          expect(page).to have_link('', href: "/teams/#{team_1.id}/player_table_name")
+        end
+      end
+    end
+  end
+
+  describe "User Story 11, Team Creation" do
+    describe "As a visitor" do
+      describe "When I visit the Team Index page" do
+        describe "The I see a link to create a new Team record, New Team" do
+          describe "When I click this link" do
+            describe "Then I am taken to '/teams/new' where I see a form for a new team record" do
+              describe "When I fill out the form with a new team's attributes:" do
+                describe "And I click the button Create Team to submit the form" do
+                  describe "The a 'Post' request is sent to the '/teams' route," do
+                    describe "a new team is created" do
+                      it "and I am redirected to the Team Index page where I see the new Team displayed" do
+                        #arrange
+                        
+                        #act
+                        visit("/teams")
+                        click_link('New Team')
+                        fill_in('name', with: 'John')
+                        fill_in('budget', with: 100)
+                        fill_in('location', with: 'Somewhere')
+                        fill_in('relegated', with: 'false')
+                        click_button('Create')
+                        #assert
+                        expect(page).to have_content("John")
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
         end
       end
     end

@@ -7,7 +7,6 @@ class TeamsController < ApplicationController
   end
 
   def show
-    # require 'pry';binding.pry
     @team = Team.find(params[:id])
   end
 
@@ -17,6 +16,7 @@ class TeamsController < ApplicationController
   end
 
   def create
+    
     team = Team.new({
       id: params[:id],
       name: params[:name],
@@ -27,6 +27,6 @@ class TeamsController < ApplicationController
   
     team.save
   
-    redirect_to '/team'
+    redirect_to '/teams'
   end
 end

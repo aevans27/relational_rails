@@ -27,6 +27,6 @@ class PlayersController < ApplicationController
   
     player.save
   
-    redirect_to '/player'
+    redirect_to '/players'
   end
 end
