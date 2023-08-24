@@ -3,6 +3,10 @@ class PlayersController < ApplicationController
     @players = Player.all
   end
 
+  # def player_count
+  #   index.length
+  # end
+
   def new
   end
 
