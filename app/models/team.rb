@@ -4,4 +4,6 @@ class Team < ApplicationRecord
   def player_count
     self.players.length
   end
+
+  # def self.order
 end

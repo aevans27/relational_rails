@@ -1,7 +1,11 @@
-<a href="/tasks">Team Index</a>
+<a href="/teams">Team Index</a>
+<a href="/players">Player Index</a>
+<a href="/teams/<%= @team.id %>/player_table_name">Player Table Name</a>
+
 
 <h1><%= @team.name %></h1>
 
 <p><%= @team.budget %></p>
 <p><%= @team.location %></p>
 <p><%= @team.relegated %></p>
+<p><%= @team.player_count %></p>

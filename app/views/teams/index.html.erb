@@ -1,3 +1,6 @@
+<a href="/teams">Team Index</a>
+<a href="/players">Player Index</a>
 <% @teams.each do |team| %>
   <p><%= team.name %></p>
+  <p><%= team.created_at.to_s %></p>
 <% end %>
