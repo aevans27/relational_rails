@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get "/teams/:id", to: "teams#show"
   get "/player_table_name", to: "players#index"
   get "/player_table_name/:id", to: "players#show"
+  get "/teams/:id/player/child_table_name", to: "teams#players#index"
 end

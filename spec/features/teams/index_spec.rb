@@ -84,4 +84,25 @@ RSpec.describe "Teams Index", type: :feature do
       end
     end
   end
+
+  describe "User Story 5, Team Player Index" do
+    describe "As a visitor" do
+      describe "When I visit '/teams/:team_id/player/child_table_name'" do
+        it "Then see each Player that is associated with that Team with each Players attributes" do
+          #arrange
+          team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+          team_2 = Team.create(name:"Arsenal", budget:1000, location:"England", relegated:false)
+          team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+          team_2.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
+          #act
+          visit "/teams/#{team_1.id}/player/child_table_name"
+          #assert
+          expect(page).to have_content(team_1.players.first.name)
+          expect(page).to have_content(team_1.players.first.salary)
+          expect(page).to have_content(team_1.players.first.position)
+          expect(page).to have_content(team_1.players.first.injured)
+        end
+      end
+    end
+  end
 end

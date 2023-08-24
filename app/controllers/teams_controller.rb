@@ -11,6 +11,11 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
   end
 
+  def players
+    @players = Player.where(team_id: params[:id])
+    # require 'pry';binding.pry
+  end
+
   def create
     team = Team.new({
       id: params[:id],
