@@ -16,7 +16,6 @@ class TeamsController < ApplicationController
   end
 
   def create
-    
     team = Team.new({
       id: params[:id],
       name: params[:name],
@@ -28,5 +27,18 @@ class TeamsController < ApplicationController
     team.save
   
     redirect_to '/teams'
+  end
+
+  def edit
+    @team = Team.find(params[:id])
+  end
+
+  def update
+    team = Team.find(params[:id])
+    team.update(name: params[:name],
+      budget: params[:budget],
+      location: params[:location],
+      relegated: params[:relegated])
+    redirect_to "/teams/#{team.id}"
   end
 end

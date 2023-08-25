@@ -1,0 +1,11 @@
+<%= form_with url: "/teams/#{@team.id}", method: :patch, data: {turbo: false}, local: true do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+  <%= form.label :budget %>
+  <%= form.text_field :budget %>
+  <%= form.label :location %>
+  <%= form.text_field :location %>
+  <%= form.label :relegated %>
+  <%= form.text_field :relegated %>
+  <%= form.submit "Update" %>
+<% end %>

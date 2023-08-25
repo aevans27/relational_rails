@@ -1,5 +1,6 @@
 <a href="/teams">Team Index</a>
 <a href="/players">Player Index</a>
+<a href="/teams/<%= @players.first.team_id %>/player_table_name/new">Create Player</a>
 <% @players.each do |player| %>
   <p><%= player.name %></p>
   <p><%= player.salary %></p>

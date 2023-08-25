@@ -1,0 +1,11 @@
+<%= form_with url: "/teams/#{@team.id}/player_table_name", method: :post, data: {turbo: false}, local: true do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+  <%= form.label :salary %>
+  <%= form.text_field :salary %>
+  <%= form.label :position %>
+  <%= form.text_field :position %>
+  <%= form.label :injured %>
+  <%= form.text_field :injured %>
+  <%= form.submit "Create" %>
+<% end %>

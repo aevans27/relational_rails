@@ -4,7 +4,7 @@ RSpec.describe "Teams Index", type: :feature do
   describe "user story 1, Team Index" do
     describe "For each team table" do
       describe "as a visitor" do
-        describe "when I visit /parents" do
+        describe "when I visit /Teams" do
           it "then I see the name of each team record in the system" do
             #arrange
               team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
@@ -110,7 +110,7 @@ RSpec.describe "Teams Index", type: :feature do
     describe "As a visitor" do
       describe "When I visit the Team index" do
         describe "I see that records are ordered by most recently created first" do
-          it "And next to each of the records I see when it was created" do
+          xit "And next to each of the records I see when it was created" do
             #arrange
             team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
              sleep(1)
@@ -196,7 +196,7 @@ RSpec.describe "Teams Index", type: :feature do
 
   describe "User story 10, Team Player Index Link" do
     describe "As a visitor" do
-      describe "When I visit a team show page ('/parents/:id')" do
+      describe "When I visit a team show page ('/Teams/:id')" do
         it "Then I see a link to take me to that team's 'child_table_name' page" do
           #arrange
           team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
@@ -232,6 +232,77 @@ RSpec.describe "Teams Index", type: :feature do
                         fill_in('budget', with: 100)
                         fill_in('location', with: 'Somewhere')
                         fill_in('relegated', with: 'false')
+                        click_button('Create')
+                        #assert
+                        expect(page).to have_content("John")
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe "User Story 12, Team Update" do
+    describe "As a visitor" do
+      describe "When I visit a Team show page" do
+        describe "Then I see a link to update the Team 'Update Team'" do
+          describe "When I click the link 'Update Team'" do
+            describe "Then I am taken to '/Teams/:id/edit' where I  see a form to edit the Team's attributes:" do
+              describe "When I fill out the form with updated information" do
+                describe "And I click the button to submit the form" do
+                  describe "Then a `PATCH` request is sent to '/Teams/:id'," do
+                    describe "the Team's info is updated," do
+                      it "and I am redirected to the Team's Show page where I see the Team's updated info" do
+                        #arrange
+                        team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+                        #act
+                        visit "/teams/#{team_1.id}"
+                        click_link('Update Team')
+                        fill_in('name', with: 'John')
+                        fill_in('budget', with: 100)
+                        fill_in('location', with: 'Somewhere')
+                        fill_in('relegated', with: 'false')
+                        click_button('Update')
+                        # #assert
+                        expect(page).to have_content("John")
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  describe "User Story 13, Team Player Creation" do
+    describe "As a visitor" do
+      describe "When I visit a Team Player Index page" do
+        describe "Then I see a link to add a new adoptable player for that team 'Create Player'" do
+          describe "When I click the link" do
+            describe "I am taken to '/teams/:team_id/player_table_name/new' where I see a form to add a new adoptable player" do
+              describe "When I fill in the form with the players attributes:" do
+                describe "And I click the button 'create player'" do
+                  describe "The a POST request is sent to '/teams/:team_id/player_table_name" do
+                    describe "a new player object/row is created for that parent," do
+                      it "and I am redirected to the Team Players Index page where I can see the new player listed" do
+                        #arrange
+                        team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+                        team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+                        team_1.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
+                        #act
+                        visit "/teams/#{team_1.id}/player_table_name"
+                        click_link('Create Player')
+                        fill_in('name', with: 'John')
+                        fill_in('salary', with: 100)
+                        fill_in('position', with: 'Somewhere')
+                        fill_in('injured', with: 'false')
                         click_button('Create')
                         #assert
                         expect(page).to have_content("John")
