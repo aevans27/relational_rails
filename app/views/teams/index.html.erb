@@ -5,5 +5,6 @@
 <% @teams.each do |team| %>
   <p><%= team.name %></p>
   <p><%= team.created_at.to_s %></p>
+  <a href="/teams/<%= team.id %>/edit">Edit <%= team.name %></a>
 <% end %>
 

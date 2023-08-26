@@ -360,4 +360,104 @@ RSpec.describe "Teams Index", type: :feature do
       end
     end
   end
+
+  describe "User Story 15, Child Index only shows `false' Records " do
+    describe "As a visitor" do
+      describe "When I visit the Player Index" do
+        it "Then I only see records where the boolean column is `true`" do
+          #arrange
+          @team_2.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+          @team_2.players.create!(name:"Tod", salary:11, position:"Defender", injured:true)
+          #act
+          visit("/player_table_name")
+          #assert
+          expect(page).to have_content(@team_2.players.first.name)
+          expect(page).to have_content(@team_2.players.first.salary)
+          expect(page).to have_content(@team_2.players.first.position)
+          expect(page).to have_content(@team_2.players.first.injured)
+
+          expect(page).to have_no_content(@team_2.players.last.name)
+          expect(page).to have_no_content(@team_2.players.last.salary)
+          expect(page).to have_no_content(@team_2.players.last.position)
+          expect(page).to have_no_content(@team_2.players.last.injured)
+        end
+      end
+    end
+  end
+
+  describe "User Story 16, Sort Parent's Children in Alphabetical Order by name " do
+    describe "As a visitor" do
+      describe "When I visit the Parent's children Index Page" do
+        describe "Then I see a link to sort children in alphabetical order" do
+          describe "When I click on the link" do
+            describe "I'm taken back to the Parent's children Index Page where I see all of the parent's children " do
+              it "in alphabetical order" do
+                #arrange
+                @team_3.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+                @team_3.players.create!(name:"Ajay", salary:11, position:"Defender", injured:true)
+                @team_3.players.create!(name:"Zan", salary:11, position:"Goalie", injured:true)
+                #act
+                visit("/teams/#{@team_3.id}/player_table_name")
+                #assert
+                expect("Ajay").to appear_before("Owen")
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe "User Story 17, Team Update From Team Index Page" do
+    describe "As a visitor" do
+      describe "When I visit the team index page" do
+        describe "Next to every team, I see a link to edit that team's info" do
+          describe "When I click this link" do
+            it "I should be taken to that team's edit page where I can update its information just like in User Story 12" do
+              #arrange
+              # team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+              #act
+              visit "/teams"
+              click_link('Edit Liverpool')
+              fill_in('name', with: 'Chealsea')
+              fill_in('budget', with: 100)
+              fill_in('location', with: 'Somewhere')
+              fill_in('relegated', with: 'false')
+              click_button('Update')
+              # #assert
+              expect(page).to have_content("Chealsea")
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe "User Story 18, Child Update From Childs Index Page" do
+    describe "As a visitor" do
+      describe "When I visit the `child_table_name` index page or a parent `child_table_name` index page" do
+        describe "Next to every child, I see a link to edit that child's info" do
+          describe "When I click the link" do
+            it "I should be taken to that `child_table_name` edit page where I can update its information just like in User Story 14" do
+              #arrange
+              # team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+              @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+              @team_1.players.create!(name:"Tommy", salary:11, position:"Defender", injured:false)
+        
+              #act
+              visit "/players"
+              click_link('Edit Owen')
+              fill_in('name', with: 'John')
+              fill_in('salary', with: 100)
+              fill_in('position', with: 'Somewhere')
+              fill_in('injured', with: 'false')
+              click_button('Update')
+              # #assert
+              expect(page).to have_content("John")
+            end
+          end
+        end
+      end
+    end
+  end
 end

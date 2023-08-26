@@ -11,7 +11,7 @@ class TeamsController < ApplicationController
   end
 
   def players
-    @players = Player.where(team_id: params[:id])
+    @players = Player.where(team_id: params[:id]).order(:name)
     # require 'pry';binding.pry
   end
 
