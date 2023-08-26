@@ -12,7 +12,11 @@ class PlayersController < ApplicationController
   end
 
   def show
-    # require 'pry';binding.pry
+    #  require 'pry';binding.pry
+    @player = Player.find(params[:id])
+  end
+
+  def edit
     @player = Player.find(params[:id])
   end
 
@@ -29,5 +33,14 @@ class PlayersController < ApplicationController
     player.save
   
     redirect_to '/players'
+  end
+
+  def update
+    player = Player.find(params[:id])
+    player.update(name: params[:name],
+    salary: params[:salary],
+    position: params[:position],
+    injured: params[:injured])
+    redirect_to "/player_table_name/#{player.id}"
   end
 end

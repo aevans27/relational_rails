@@ -15,5 +15,7 @@ Rails.application.routes.draw do
   get "/players", to: "players#index"
   get "/player_table_name", to: "players#index"
   get "/player_table_name/:id", to: "players#show"
+  get "/player_table_name/:id/edit", to: "players#edit"
+  patch "/player_table_name/:id", to: "players#update"
   
 end

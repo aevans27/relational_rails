@@ -1,21 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe "Teams Index", type: :feature do
+  before(:all) do
+    @team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+    @team_2 = Team.create(name:"Real Madrid", budget:1000, location:"Italy", relegated:false)
+    @team_3 = Team.create(name:"Manchester United", budget:1000, location:"England", relegated:false)
+  end
+
   describe "user story 1, Team Index" do
     describe "For each team table" do
       describe "as a visitor" do
         describe "when I visit /Teams" do
           it "then I see the name of each team record in the system" do
             #arrange
-              team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
-              team_2 = Team.create(name:"Real Madrid", budget:1000, location:"Italy", relegated:false)
-              team_3 = Team.create(name:"Manchester United", budget:1000, location:"England", relegated:false)
+              # team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+              # team_2 = Team.create(name:"Real Madrid", budget:1000, location:"Italy", relegated:false)
+              # team_3 = Team.create(name:"Manchester United", budget:1000, location:"England", relegated:false)
             #act
               visit "/teams"
             #assert
-              expect(page).to have_content(team_1.name)
-              expect(page).to have_content(team_2.name)
-              expect(page).to have_content(team_3.name)
+              expect(page).to have_content(@team_1.name)
+              expect(page).to have_content(@team_2.name)
+              expect(page).to have_content(@team_3.name)
           end
         end
       end
@@ -27,16 +33,16 @@ RSpec.describe "Teams Index", type: :feature do
       describe "When I visit '/teams/:id" do
         it "The I see the team with that id including the team's attributes" do
           #arrange
-          team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
-          team_2 = Team.create(name:"Real Madrid", budget:1000, location:"Italy", relegated:false)
-          team_3 = Team.create(name:"Manchester United", budget:1000, location:"England", relegated:false)
+          # team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+          # team_2 = Team.create(name:"Real Madrid", budget:1000, location:"Italy", relegated:false)
+          # team_3 = Team.create(name:"Manchester United", budget:1000, location:"England", relegated:false)
           #act
-          visit "/teams/#{team_1.id}"
+          visit "/teams/#{@team_1.id}"
           #assert
-          expect(page).to have_content(team_1.name)
-          expect(page).to have_content(team_1.budget)
-          expect(page).to have_content(team_1.location)
-          expect(page).to have_content(team_1.relegated)
+          expect(page).to have_content(@team_1.name)
+          expect(page).to have_content(@team_1.budget)
+          expect(page).to have_content(@team_1.location)
+          expect(page).to have_content(@team_1.relegated)
         end
       end
     end
@@ -47,20 +53,20 @@ RSpec.describe "Teams Index", type: :feature do
       describe "When I visit '/player_table_name" do
         it "Then I see each player in the system including the player's attributes" do
           #arrange
-          team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
-          team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
-          team_1.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
+          # team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+          @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+          @team_1.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
           #act
           visit "/player_table_name"
           #assert
-          expect(page).to have_content(team_1.players.first.name)
-          expect(page).to have_content(team_1.players.first.salary)
-          expect(page).to have_content(team_1.players.first.position)
-          expect(page).to have_content(team_1.players.first.injured)
-          expect(page).to have_content(team_1.players.last.name)
-          expect(page).to have_content(team_1.players.last.salary)
-          expect(page).to have_content(team_1.players.last.position)
-          expect(page).to have_content(team_1.players.last.injured)
+          expect(page).to have_content(@team_1.players.first.name)
+          expect(page).to have_content(@team_1.players.first.salary)
+          expect(page).to have_content(@team_1.players.first.position)
+          expect(page).to have_content(@team_1.players.first.injured)
+          expect(page).to have_content(@team_1.players.last.name)
+          expect(page).to have_content(@team_1.players.last.salary)
+          expect(page).to have_content(@team_1.players.last.position)
+          expect(page).to have_content(@team_1.players.last.injured)
         end
       end
     end
@@ -71,15 +77,15 @@ RSpec.describe "Teams Index", type: :feature do
       describe "When I visit '/player_table_name/:id'" do
         it "Then I see the player with that id including the player's attributes" do
           #arrange
-          team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
-          team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+          # team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+           @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
           #act
-          visit "/player_table_name/#{team_1.players.first.id}"
+          visit "/player_table_name/#{@team_1.players.first.id}"
           #assert
-          expect(page).to have_content(team_1.players.first.name)
-          expect(page).to have_content(team_1.players.first.salary)
-          expect(page).to have_content(team_1.players.first.position)
-          expect(page).to have_content(team_1.players.first.injured)
+          expect(page).to have_content(@team_1.players.first.name)
+          expect(page).to have_content(@team_1.players.first.salary)
+          expect(page).to have_content(@team_1.players.first.position)
+          expect(page).to have_content(@team_1.players.first.injured)
         end
       end
     end
@@ -90,17 +96,17 @@ RSpec.describe "Teams Index", type: :feature do
       describe "When I visit '/teams/:team_id/player/child_table_name'" do
         it "Then see each Player that is associated with that Team with each Players attributes" do
           #arrange
-          team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
-          team_2 = Team.create(name:"Arsenal", budget:1000, location:"England", relegated:false)
-          team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
-          team_2.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
+          # team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+          # team_2 = Team.create(name:"Arsenal", budget:1000, location:"England", relegated:false)
+          @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+          @team_2.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
           #act
-          visit "/teams/#{team_1.id}/player_table_name"
+          visit "/teams/#{@team_1.id}/player_table_name"
           #assert
-          expect(page).to have_content(team_1.players.first.name)
-          expect(page).to have_content(team_1.players.first.salary)
-          expect(page).to have_content(team_1.players.first.position)
-          expect(page).to have_content(team_1.players.first.injured)
+          expect(page).to have_content(@team_1.players.first.name)
+          expect(page).to have_content(@team_1.players.first.salary)
+          expect(page).to have_content(@team_1.players.first.position)
+          expect(page).to have_content(@team_1.players.first.injured)
         end
       end
     end
@@ -112,13 +118,13 @@ RSpec.describe "Teams Index", type: :feature do
         describe "I see that records are ordered by most recently created first" do
           xit "And next to each of the records I see when it was created" do
             #arrange
-            team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+            team_4 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
              sleep(1)
-            team_2 = Team.create(name:"Real Madrid", budget:1000, location:"Italy", relegated:false)
+            team_5 = Team.create(name:"Real Madrid", budget:1000, location:"Italy", relegated:false)
             sleep(1)
-            team_3 = Team.create(name:"Manchester United", budget:1000, location:"England", relegated:false)
+            team_6 = Team.create(name:"Manchester United", budget:1000, location:"England", relegated:false)
              sleep(1)
-            team_0 = Team.create(name:"Not a real team", budget:1000, location:"England", relegated:false)
+            team_7 = Team.create(name:"Not a real team", budget:1000, location:"England", relegated:false)
             
           #act
             visit "/teams"
@@ -127,12 +133,12 @@ RSpec.describe "Teams Index", type: :feature do
           #  puts team_2.created_at
           #  puts team_3.created_at
           #  puts team_0.created_at
-            expect(page).to have_content(team_1.created_at)
-            expect(page).to have_content(team_2.created_at)
-            expect(page).to have_content(team_3.created_at)
-            expect(page).to have_content(team_0.created_at)
-            this = team_0.created_at.to_s
-            that = team_3.created_at.to_s
+            expect(page).to have_content(team_5.created_at)
+            expect(page).to have_content(team_6.created_at)
+            expect(page).to have_content(team_7.created_at)
+            expect(page).to have_content(team_4.created_at)
+            this = team_7.created_at.to_s
+            that = team_4.created_at.to_s
             expect(this).to appear_before(that)
           end
         end
@@ -144,18 +150,18 @@ RSpec.describe "Teams Index", type: :feature do
       describe "When I visit a team's show page" do
         it "I see a count of the number of players associated with this team" do
           #arrange
-          team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
-          team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
-          team_1.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
+          # team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+          @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+          @team_1.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
           #act
-          visit "/teams/#{team_1.id}"
+          visit "/teams/#{@team_1.id}"
           #assert
           # puts team_1.player_count
-          expect(page).to have_content(team_1.name)
-          expect(page).to have_content(team_1.budget)
-          expect(page).to have_content(team_1.location)
-          expect(page).to have_content(team_1.relegated)
-          expect(page).to have_content(team_1.player_count)
+          expect(page).to have_content(@team_1.name)
+          expect(page).to have_content(@team_1.budget)
+          expect(page).to have_content(@team_1.location)
+          expect(page).to have_content(@team_1.relegated)
+          expect(page).to have_content(@team_1.player_count)
         end
       end
     end
@@ -199,14 +205,14 @@ RSpec.describe "Teams Index", type: :feature do
       describe "When I visit a team show page ('/Teams/:id')" do
         it "Then I see a link to take me to that team's 'child_table_name' page" do
           #arrange
-          team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
-          team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
-          team_1.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
+          # team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+          @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+          @team_1.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
           #act
-          visit "/teams/#{team_1.id}"
+          visit "/teams/#{@team_1.id}"
           #assert
           # puts team_1.player_count
-         expect(page).to have_link('', href: "/teams/#{team_1.id}/player_table_name")
+         expect(page).to have_link('', href: "/teams/#{@team_1.id}/player_table_name")
         end
       end
     end
@@ -259,9 +265,9 @@ RSpec.describe "Teams Index", type: :feature do
                     describe "the Team's info is updated," do
                       it "and I am redirected to the Team's Show page where I see the Team's updated info" do
                         #arrange
-                        team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+                        # team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
                         #act
-                        visit "/teams/#{team_1.id}"
+                        visit "/teams/#{@team_1.id}"
                         click_link('Update Team')
                         fill_in('name', with: 'John')
                         fill_in('budget', with: 100)
@@ -293,11 +299,11 @@ RSpec.describe "Teams Index", type: :feature do
                     describe "a new player object/row is created for that parent," do
                       it "and I am redirected to the Team Players Index page where I can see the new player listed" do
                         #arrange
-                        team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
-                        team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
-                        team_1.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
+                        # team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+                        @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+                        @team_1.players.create!(name:"Rooney", salary:15, position:"Midfield", injured:false)
                         #act
-                        visit "/teams/#{team_1.id}/player_table_name"
+                        visit "/teams/#{@team_1.id}/player_table_name"
                         click_link('Create Player')
                         fill_in('name', with: 'John')
                         fill_in('salary', with: 100)
@@ -307,6 +313,43 @@ RSpec.describe "Teams Index", type: :feature do
                         #assert
                         expect(page).to have_content("John")
                       end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe "User Story 14, Child Update" do
+    describe "As a visitor" do
+      describe "When I visit a Player Show page" do
+        describe "Then I see a link to update that Update Player" do
+          describe "When I click the link" do
+            describe "I am taken to '/player_table_name/:id/edit' where I see a form to edit the player's attributes:" do
+              describe "When I click the button to submit the form 'Update player'" do
+                describe "Then a `PATCH` request is sent to '/player_table_name/:id'," do
+                  describe "the player's data is updated," do
+                    it "and I am redirected to the player Show page where I see the player's updated information" do
+                      #arrange
+                      # team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
+                      @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+                
+                      #act
+                      puts @team_1.players
+                      puts @team_1.players.last.id
+                      visit "/player_table_name/#{@team_1.players.last.id}"
+                      click_link('Update Player')
+                      fill_in('name', with: 'John')
+                      fill_in('salary', with: 100)
+                      fill_in('position', with: 'Somewhere')
+                      fill_in('injured', with: 'false')
+                      click_button('Update')
+                      # #assert
+                      expect(page).to have_content("John")
                     end
                   end
                 end

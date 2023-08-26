@@ -1,0 +1,11 @@
+<%= form_with url: "/player_table_name/#{@player.id}", method: :patch, data: {turbo: false}, local: true do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+  <%= form.label :salary %>
+  <%= form.text_field :salary %>
+  <%= form.label :position %>
+  <%= form.text_field :position %>
+  <%= form.label :injured %>
+  <%= form.text_field :injured %>
+  <%= form.submit "Update" %>
+<% end %>
