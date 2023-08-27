@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_26_213014) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_27_024043) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,10 +19,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_213014) do
     t.integer "salary"
     t.string "position"
     t.boolean "injured"
+    t.bigint "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "team_id", null: false
-    t.index ["team_id"], name: "index_players_on_team_id"
   end
 
   create_table "teams", force: :cascade do |t|
