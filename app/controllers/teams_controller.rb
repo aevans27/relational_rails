@@ -41,4 +41,11 @@ class TeamsController < ApplicationController
       relegated: params[:relegated])
     redirect_to "/teams/#{team.id}"
   end
+
+  def destroy
+    team = Team.find(params[:id])
+    team.players.destroy_all
+    team.destroy
+    redirect_to '/teams'
+  end
 end

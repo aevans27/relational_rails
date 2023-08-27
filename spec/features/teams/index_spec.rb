@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Teams Index", type: :feature do
-  before(:all) do
+  before(:each) do
     @team_1 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
     @team_2 = Team.create(name:"Real Madrid", budget:1000, location:"Italy", relegated:false)
     @team_3 = Team.create(name:"Manchester United", budget:1000, location:"England", relegated:false)
@@ -145,6 +145,7 @@ RSpec.describe "Teams Index", type: :feature do
       end
     end
   end
+
   describe "User Story 7, Team Player count" do
     describe "As a visitor" do
       describe "When I visit a team's show page" do
@@ -183,6 +184,7 @@ RSpec.describe "Teams Index", type: :feature do
       end
     end
   end
+
   describe "User Story 9, Team Index Link" do
     describe "As a visitor" do
       describe "When I visit any page on the site" do
@@ -287,6 +289,7 @@ RSpec.describe "Teams Index", type: :feature do
       end
     end
   end
+
   describe "User Story 13, Team Player Creation" do
     describe "As a visitor" do
       describe "When I visit a Team Player Index page" do
@@ -454,6 +457,131 @@ RSpec.describe "Teams Index", type: :feature do
               click_button('Update')
               # #assert
               expect(page).to have_content("John")
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe "User Story 19, Team Delete" do
+    describe "As a visitor" do
+      describe "When I visit a team show page" do
+        describe "Then I see a link to delete the team" do
+          describe "When I click the link Delete team" do
+            describe "Then a 'DELETE' request is sent to '/teams/:id'," do
+              describe "the team is deleted, and all players records are deleted" do
+                it "and I am redirected to the teams index page where I no longer see this teams" do
+                  #arrange
+                  @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+                  @team_1.players.create!(name:"Tommy", salary:11, position:"Defender", injured:false)
+                  #act
+                  visit "/teams/#{@team_1.players.first.id}"
+                  click_button("Delete")
+                  #assert
+                  expect(page).to have_no_content(@team_1.name)
+                  expect(page).to have_content(@team_2.name)
+                  expect(page).to have_content(@team_3.name)
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe "User Story 20, Player Delete" do
+    describe "As a visitor" do
+      describe "When I visit a Player show page" do
+        describe "Then I see a link to delete the player 'Delete Player'" do
+          describe "When I click the link" do
+            describe "Then a 'DELETE' request is sent to '/player_table_name/:id'," do
+              describe "the player is deleted" do
+                it "and I am redirected to the player index page where I no longer see this player" do
+                  #arrange
+                  @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+                  @team_1.players.create!(name:"Tommy", salary:11, position:"Defender", injured:false)
+                  #act
+                  visit "/player_table_name/#{@team_1.players.first.id}"
+                  click_button("Delete Player")
+                  #assert
+                  expect(page).to have_no_content("Owen")
+                  expect(page).to have_content("Tommy")
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe "User Story 21. Display Records Over a Given Threshold" do
+    describe "As a visitor" do
+      describe "When I visit the Teams's players Index Page" do
+        describe "I see a form that allows me to input a number value" do
+          describe "When I input a number value and click the submit button that reads 'Only return records with more than `number` of `column_name`'" do
+            it "Then I am brought back to the current index page with only the records that meet that threshold shown." do
+              #arrange
+              @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+              @team_1.players.create!(name:"Tommy", salary:11, position:"Defender", injured:false)
+              @team_1.players.create!(name:"Joey", salary:11, position:"Goalie", injured:false)
+              #act
+              visit("/teams/#{@team_1.id}/player_table_name")
+              #assert
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe "User Story 22, Display Records Over a Given Threshold" do
+    describe "As a visitor" do
+      describe "When I visit the parent index page" do
+        describe "Next to every parent, I see a link to delete that parent" do
+          describe "When I click the link" do
+            it "I am returned to the Parent Index Page where I no longer see that parent" do
+              #arrange
+              # @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+              # @team_1.players.create!(name:"Tommy", salary:11, position:"Defender", injured:false)
+              #act
+              visit "/teams"
+              click_button("Delete #{@team_1.name}")
+              #assert
+              expect(page).to have_no_content(@team_1.name)
+              expect(page).to have_content(@team_2.name)
+              expect(page).to have_content(@team_3.name)
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe "User Story 23, Player Delete from Players Index Page" do
+    describe "As a visitor" do
+      describe "When I visit the `player_table_name` index page or a team `player_table_name` index page" do
+        describe "Next to every player, I see a link to delete that player" do
+          describe "When I click the link" do
+            it "I should be taken to the `player_table_name` index page where I no longer see that child" do
+              #arrange
+              @team_1.players.create!(name:"Owen", salary:10, position:"Forward", injured:false)
+              @team_1.players.create!(name:"Tommy", salary:11, position:"Defender", injured:false)
+              @team_1.players.create!(name:"Joey", salary:11, position:"Goalie", injured:false)
+              #act
+              visit "/teams/#{@team_1.id}/player_table_name"
+              click_button("Delete #{@team_1.players.first.name}")
+              #assert
+              expect(page).to have_no_content("Owen")
+              expect(page).to have_content("Tommy")
+              #act
+              visit "/player_table_name"
+              click_button("Delete #{@team_1.players.first.name}")
+              #assert
+              expect(page).to have_no_content("Owen")
+              expect(page).to have_no_content("Tommy")
             end
           end
         end

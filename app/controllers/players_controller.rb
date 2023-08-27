@@ -43,4 +43,11 @@ class PlayersController < ApplicationController
     injured: params[:injured])
     redirect_to "/player_table_name/#{player.id}"
   end
+
+  def destroy
+    player = Player.find(params[:id])
+    # team.players.destroy_all
+    player.destroy
+    redirect_to '/players'
+  end
 end

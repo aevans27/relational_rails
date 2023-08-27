@@ -2,6 +2,8 @@
 <a href="/players">Player Index</a>
 <a href="/teams/<%= @team.id %>/player_table_name">Player Table Name</a>
 <a href="/teams/<%= @team.id %>/edit">Update Team</a>
+# <a href="/teams/<%= @team.id %>">Delete <%= @team.name %></a>
+<%= button_to "Delete Team", "/teams/#{@team.id}", method: :delete %>
 
 
 <h1><%= @team.name %></h1>

@@ -6,4 +6,5 @@
   <p><%= player.position %></p>
   <p><%= player.injured %></p>
   <a href="/player_table_name/<%= player.id %>/edit">Edit <%= player.name %></a>
+  <%= button_to "Delete #{player.name}", "/player_table_name/#{player.id}", method: :delete %>
 <% end %>

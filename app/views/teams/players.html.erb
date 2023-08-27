@@ -6,4 +6,5 @@
   <p><%= player.salary %></p>
   <p><%= player.position %></p>
   <p><%= player.injured %></p>
+  <%= button_to "Delete #{player.name}", "/player_table_name/#{player.id}", method: :delete %>
 <% end %>
