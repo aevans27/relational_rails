@@ -116,7 +116,7 @@ RSpec.describe "Teams Index", type: :feature do
     describe "As a visitor" do
       describe "When I visit the Team index" do
         describe "I see that records are ordered by most recently created first" do
-          xit "And next to each of the records I see when it was created" do
+          it "And next to each of the records I see when it was created" do
             #arrange
             team_4 = Team.create(name:"Liverpool", budget:1000, location:"England", relegated:false)
              sleep(1)
@@ -529,7 +529,12 @@ RSpec.describe "Teams Index", type: :feature do
               @team_1.players.create!(name:"Joey", salary:11, position:"Goalie", injured:false)
               #act
               visit("/teams/#{@team_1.id}/player_table_name")
+              fill_in('salary', with: '11')
+              click_button('Change')
               #assert
+              expect(page).to have_no_content("Owen")
+              expect(page).to have_content("Tommy")
+              expect(page).to have_content("Joey")
             end
           end
         end

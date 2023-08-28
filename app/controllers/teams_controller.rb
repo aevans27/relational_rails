@@ -15,6 +15,12 @@ class TeamsController < ApplicationController
     # require 'pry';binding.pry
   end
 
+  def salary
+    # require 'pry';binding.pry
+    @players = Player.where(team_id: params[:id], salary: params[:salary]..).order(:name)
+    # require 'pry';binding.pry
+  end
+
   def create
     team = Team.new({
       id: params[:id],

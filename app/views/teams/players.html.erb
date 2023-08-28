@@ -8,3 +8,9 @@
   <p><%= player.injured %></p>
   <%= button_to "Delete #{player.name}", "/player_table_name/#{player.id}", method: :delete %>
 <% end %>
+
+<%= form_with url: "player_by_salary", method: :get, data: {turbo: false}, local: true do |form| %>
+  <%= form.label :salary %>
+  <%= form.text_field :salary %>
+  <%= form.submit "Change" %>
+<% end %>
