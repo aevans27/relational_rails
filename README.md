@@ -1,24 +1,18 @@
-# README
+# Relational Rails
+## Turing Mod 2
+## Project 1
+### Developers: Allan Evans
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Details:
 
-Things you may want to cover:
+* Ruby version = 3.2.2  Rails version = 7.0.7
 
-* Ruby version
+* System dependencies = VS Code, Ruby, Rails
 
-* System dependencies
+* Configuration = Required gems:pry, rspec-rails, simplecov, capybara, launchy, shoulda-matchers, orderly
 
-* Configuration
+* Database creation = Just run 'RAILS_ENV=test rails db:{drop,create,migrate,seed}'
 
-* Database creation
+* How to run the test suite = Just run 'bundle exec rspec'
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Schema setup: [Table Link](https://dbdesigner.page.link/eoxjNQx2TEJo4x1r9)

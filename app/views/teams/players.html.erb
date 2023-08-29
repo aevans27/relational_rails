@@ -1,0 +1,16 @@
+<a href="/teams">Team Index</a>
+<a href="/players">Player Index</a>
+<a href="/teams/<%= @players.first.team_id %>/player_table_name/new">Create Player</a>
+<% @players.each do |player| %>
+  <p><%= player.name %></p>
+  <p><%= player.salary %></p>
+  <p><%= player.position %></p>
+  <p><%= player.injured %></p>
+  <%= button_to "Delete #{player.name}", "/player_table_name/#{player.id}", method: :delete %>
+<% end %>
+
+<%= form_with url: "player_by_salary", method: :get, data: {turbo: false}, local: true do |form| %>
+  <%= form.label :salary %>
+  <%= form.text_field :salary %>
+  <%= form.submit "Change" %>
+<% end %>

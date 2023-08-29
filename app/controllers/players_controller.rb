@@ -1,9 +1,23 @@
 class PlayersController < ApplicationController
   def index
-    @players = Player.all
+    @players = Player.where("injured = false")
   end
 
+  # def player_count
+  #   index.length
+  # end
+
   def new
+    @team = Team.find(params[:team_id])
+  end
+
+  def show
+    #  require 'pry';binding.pry
+    @player = Player.find(params[:id])
+  end
+
+  def edit
+    @player = Player.find(params[:id])
   end
 
   def create
@@ -18,6 +32,22 @@ class PlayersController < ApplicationController
   
     player.save
   
-    redirect_to '/player'
+    redirect_to '/players'
+  end
+
+  def update
+    player = Player.find(params[:id])
+    player.update(name: params[:name],
+    salary: params[:salary],
+    position: params[:position],
+    injured: params[:injured])
+    redirect_to "/player_table_name/#{player.id}"
+  end
+
+  def destroy
+    player = Player.find(params[:id])
+    # team.players.destroy_all
+    player.destroy
+    redirect_to '/players'
   end
 end
