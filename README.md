@@ -15,8 +15,4 @@ Details:
 
 * How to run the test suite = Just run 'bundle exec rspec'
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
 * Schema setup: [Table Link](https://dbdesigner.page.link/eoxjNQx2TEJo4x1r9)
